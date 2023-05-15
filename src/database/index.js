@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 const connOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
 };
+// importing dotenv library to access .env files
+import dotenv from "dotenv";
+dotenv.config();
 
 console.log(process.env.MONGO_URI);
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/API_TEST";
