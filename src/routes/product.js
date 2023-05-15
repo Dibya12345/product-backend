@@ -1,11 +1,17 @@
 import express from "express";
 import { check } from "express-validator";
 import auth from "../middlewares/auth.js";
-import productController from "../controllers/product.js";
+import {
+  findAll,
+  createProduct,
+  findOne,
+  update,
+  deleteProduct,
+} from "../controllers/product.js";
 
 const router = express.Router();
 
-router.get("/", productController.findAll);
+router.get("/", findAll);
 
 router.post(
   "/new",
@@ -15,10 +21,10 @@ router.post(
     check("body", "Please fill out the field").trim().notEmpty(),
   ],
 
-  productController.createProduct
+  createProduct
 );
 
-router.get("/:id", productController.findOne);
+router.get("/:id", findOne);
 
 router.post(
   "/edit/:id",
@@ -28,9 +34,9 @@ router.post(
     check("body", "Please fill out the field").trim().notEmpty(),
   ],
 
-  productController.update
+  update
 );
 
-router.post("/delete/:id", auth, productController.delete);
+router.post("/delete/:id", auth, deleteProduct);
 
 export default router;
