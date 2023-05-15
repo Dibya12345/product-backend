@@ -1,3 +1,7 @@
+// importing dotenv library to access .env files
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import connectToDatabase from "./database/index.js";
 import user from "./routes/user.js";
