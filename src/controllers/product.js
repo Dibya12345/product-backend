@@ -2,7 +2,7 @@ import Product from "../models/product.js";
 import User from "../models/userModel.js";
 import CustomError from "../models/CustomError.js";
 
-const createProduct = async (req, res, next) => {
+export const createProduct = async (req, res, next) => {
   if (!req.body) {
     return next(new CustomError("Body cannot be empty", 400));
   }
@@ -28,7 +28,7 @@ const createProduct = async (req, res, next) => {
   }
 };
 
-const findAll = async (req, res, next) => {
+export const findAll = async (req, res, next) => {
   try {
     const tut = await Product.find();
 
@@ -39,9 +39,7 @@ const findAll = async (req, res, next) => {
   }
 };
 
-
-
-const findOne = async (req, res, next) => {
+export const findOne = async (req, res, next) => {
   try {
     const tut = await Product.findById(req.params.id);
 
@@ -54,7 +52,7 @@ const findOne = async (req, res, next) => {
   }
 };
 
-const update = async (req, res, next) => {
+export const update = async (req, res, next) => {
   try {
     const editProduct = await Product.findOneAndUpdate(
       { _id: req.params.id },
@@ -72,7 +70,7 @@ const update = async (req, res, next) => {
   }
 };
 
-const delete = async (req, res, next) => {
+export const deleteProduct = async (req, res, next) => {
   try {
     const Product = await Product.findById(req.params.id);
     if (!Product) {
@@ -96,5 +94,3 @@ const delete = async (req, res, next) => {
     next(new CustomError("Something went wrong", 500));
   }
 };
-
-export default createProduct;
