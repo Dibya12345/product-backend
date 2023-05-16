@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(400).send("Welcome to the openfibre challenge");
+  res.status(200).send("Welcome to the openfibre challenge");
 });
 
 app.use("/user", user);
@@ -38,6 +38,6 @@ const PORT = process.env.PORT || 3000;
 
 connectToDatabase().then((_) => {
   app.listen(PORT, (_) => {
-    console.log(`Server started on port ${PORT}`);
+    console.log(`Server started on port http://localhost:${PORT}/`);
   });
 });

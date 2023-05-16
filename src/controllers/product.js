@@ -8,16 +8,21 @@ export const createProduct = async (req, res, next) => {
   }
   try {
     const product = await Product.create({
-      title: req.body.title,
-      body: req.body.body,
-      creator: req.uid,
+      name: req.uid,
+      price: req.body.price,
+      description: req.body.description,
+      category: req.body.category,
+      inStock: req.body.inStock,
+      imageUrl: req.body.imageUrl,
     });
 
     //connected products with the user
     const user = await User.findById(req.uid);
 
     if (user) {
-      const products = [...user.products, Product.id];
+      console.log(product);
+      const products = [...user.products, product];
+      console.log(products);
       await user.updateOne({ products });
 
       return res.status(201).send({ success: true, Product });
@@ -54,6 +59,7 @@ export const findOne = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
+    const {name, price, description, category, inStock, imageUrl} = req.body;
     const editProduct = await Product.findOneAndUpdate(
       { _id: req.params.id },
       req.body,

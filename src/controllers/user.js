@@ -1,10 +1,3 @@
-// const User = require("../models/userModel");
-// const bcrypt = require("bcrypt");
-// const { validationResult } = require("express-validator");
-
-// const { createToken } = require("../utils/jwt");
-// const CustomError = require("../models/CustomError");
-
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import { validationResult } from "express-validator";
@@ -13,6 +6,7 @@ import CustomError from "../models/CustomError.js";
 
 const signUp = async (req, res, next) => {
   const errors = validationResult(req);
+  console.log(errors);
   if (!errors.isEmpty()) {
     return res.status(400).json({
       success: false,
@@ -53,6 +47,7 @@ const signUp = async (req, res, next) => {
 
     res.status(201).json({ success: true, user });
   } catch (err) {
+    console.log(err);
     next(new CustomError("Something went wrong", 500));
   }
 };
