@@ -20,7 +20,6 @@ router.post(
     check("title", "Please fill out the field").trim().notEmpty(),
     check("body", "Please fill out the field").trim().notEmpty(),
   ],
-
   createProduct
 );
 

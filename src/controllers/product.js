@@ -1,11 +1,16 @@
 import Product from "../models/product.js";
 import User from "../models/userModel.js";
 import CustomError from "../models/CustomError.js";
+// import { validationResult } from "express-validator";
 
 export const createProduct = async (req, res, next) => {
-  if (!req.body) {
-    return next(new CustomError("Body cannot be empty", 400));
-  }
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return res.status(400).json({
+  //     success: false,
+  //     errors: errors.array(),
+  //   });
+  // }
   try {
     const product = await Product.create({
       name: req.uid,
@@ -15,7 +20,7 @@ export const createProduct = async (req, res, next) => {
       inStock: req.body.inStock,
       imageUrl: req.body.imageUrl,
     });
-
+    console.log(product);
     //connected products with the user
     const user = await User.findById(req.uid);
 
@@ -59,7 +64,7 @@ export const findOne = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
-    const {name, price, description, category, inStock, imageUrl} = req.body;
+    const { name, price, description, category, inStock, imageUrl } = req.body;
     const editProduct = await Product.findOneAndUpdate(
       { _id: req.params.id },
       req.body,
@@ -78,12 +83,12 @@ export const update = async (req, res, next) => {
 
 export const deleteProduct = async (req, res, next) => {
   try {
-    const Product = await Product.findById(req.params.id);
-    if (!Product) {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
       return next(new CustomError("Product not found", 404));
     }
 
-    if (Product.creator != req.uid) {
+    if (product.name != req.uid) {
       return next(new CustomError("Unauthorized access to delete route", 400));
     }
 
@@ -97,6 +102,7 @@ export const deleteProduct = async (req, res, next) => {
 
     return res.send({ success: true, Product });
   } catch (err) {
+    console.log(err);
     next(new CustomError("Something went wrong", 500));
   }
 };
